@@ -12,7 +12,7 @@ proc portInUse*(port: int, address = "", protocol = IPPROTO_TCP, sockType = SOCK
     result = true
   socket.close()
 
-proc getFreePort(): Port = 
+proc getFreePort*(): Port = 
   while true:
     let candidate = rand(1024..65535)
     if not portInUse(candidate): return Port candidate
