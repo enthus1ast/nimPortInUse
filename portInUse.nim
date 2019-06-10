@@ -1,4 +1,4 @@
-import net 
+import net, random 
 
 proc portInUse*(port: int, address = "", protocol = IPPROTO_TCP, sockType = SOCK_STREAM): bool =
   ## if port is in use, return `true`; else return `false`
@@ -11,6 +11,11 @@ proc portInUse*(port: int, address = "", protocol = IPPROTO_TCP, sockType = SOCK
   except:
     result = true
   socket.close()
+
+proc getFreePort(): Port = 
+  while true:
+    let candidate = rand(1024..65535)
+    if not portInUse(candidate): return Port candidate
 
 when isMainModule:
   for port in 1024..high(Port).int:
